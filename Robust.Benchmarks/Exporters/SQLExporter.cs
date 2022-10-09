@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -53,7 +54,7 @@ public sealed class SQLExporter : IExporter
             !TryGetEnvironmentVariable("GITHUB_SHA", logger, out var gitHash))
             return;
 
-        if (!int.TryParse(rawPort, out var port))
+        if (!int.TryParse(rawPort, NumberStyles.Any, CultureInfo.InvariantCulture, out var port))
         {
             logger.WriteError("Failed parsing ROBUST_BENCHMARKS_SQL_PORT to int.");
             return;
